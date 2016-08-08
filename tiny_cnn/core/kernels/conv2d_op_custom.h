@@ -44,6 +44,7 @@
 */
 #pragma once
 
+#include "tiny_cnn/core/kernels/conv2d.h"
 #include "tiny_cnn/core/framework/op_kernel.h"
 
 #include "tiny_cnn/core/kernels/conv2d.h"
