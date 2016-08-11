@@ -33,10 +33,6 @@ using namespace tiny_cnn;
 
 namespace tiny_cnn {
 
-TEST(core, print_devices) {
-    printAllAvailableDevice();
-}
-
 TEST(core, device) {
     // CPU and GPU devices are instantiated
 
