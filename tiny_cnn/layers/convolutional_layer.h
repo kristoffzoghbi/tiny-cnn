@@ -32,6 +32,7 @@
 
 #include "tiny_cnn/core/framework/op_kernel.h"
 #include "tiny_cnn/core/kernels/conv2d_op_custom.h"
+#include "tiny_cnn/core/kernels/conv2d_op_opencl.h"
 
 #include "tiny_cnn/core/backend_tiny.h"
 #include "tiny_cnn/core/backend_nnp.h"
