@@ -44,9 +44,6 @@
 */
 #pragma once
 
-#include "tiny_cnn/core/kernels/conv2d.h"
-#include "tiny_cnn/core/kernels/conv2d_tiny_op_functor.h"
-
 #include "tiny_cnn/core/framework/op_kernel.h"
 
 #include "tiny_cnn/core/kernels/conv2d.h"
@@ -70,6 +67,9 @@ class Conv2dCustomForwardOp : private Conv2d, public core::OpKernel {
         tensor_t in_data_padded;
         Conv2d::setParams(context.params());
         Conv2d::copy_and_pad_input(in_data, in_data_padded);
+
+        // initialize outputs
+        fill_tensor(out_data, float_t(0));
 
         // convolution algorithm
         conv2d_op_custom_impl(in_data_padded,
