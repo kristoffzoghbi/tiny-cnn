@@ -26,7 +26,7 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "tiny_cnn/tiny_cnn.h"
+//#include "tiny_cnn/tiny_cnn.h"
 
 using namespace tiny_cnn::activation;
 using namespace tiny_cnn::layers;

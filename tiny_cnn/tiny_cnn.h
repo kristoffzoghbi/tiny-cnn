@@ -136,4 +136,10 @@ using slice = tiny_cnn::slice_layer;
 
 using power = tiny_cnn::power_layer;
 
+using batch_norm = tiny_cnn::batch_normalization_layer;
+
+using slice = tiny_cnn::slice_layer;
+
+using power = tiny_cnn::power_layer;
+
 }

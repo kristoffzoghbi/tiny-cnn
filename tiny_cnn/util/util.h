@@ -52,12 +52,9 @@
 #include <future>
 #endif
 
-#ifdef USE_OPENCL
-#ifdef __APPLE__
-    #include <OpenCL/cl.hpp>
+#include "third_party/CLCudaAPI/clpp11.h"
 #else
-    #include <CL/cl2.hpp>
-#endif
+#include "third_party/CLCudaAPI/cupp11.h"
 #endif
 
 #define CNN_UNREFERENCED_PARAMETER(x) (void)(x)
@@ -540,6 +537,7 @@ inline void fill_tensor(tensor_t& tensor, float_t value, cnn_size_t size) {
 }
 
 // get all platforms (drivers), e.g. NVIDIA
+<<<<<<< HEAD
 #ifdef USE_OPENCL
 void printAllAvailableDevice() {
     std::vector<cl::Platform> all_platforms;
@@ -571,6 +569,50 @@ void printAllAvailableDevice() {
     }
 }
 #endif
+=======
+// https://github.com/CNugteren/CLCudaAPI/blob/master/samples/device_info.cc
+
+void printAvailableDevice(const int _platform_id, const int _device_id) {
+#if defined(USE_OPENCL) || defined(USE_CUDA)
+
+    // Platform/device settings
+    auto platform_id = size_t{_platform_id};
+    auto device_id   = size_t{_device_id};
+
+    // Initializes the CLCudaAPI platform and device. This initializes the OpenCL/CUDA back-end and
+    // selects a specific device on the platform.
+    auto platform = CLCudaAPI::Platform(platform_id);
+    auto device = CLCudaAPI::Device(platform, device_id);
+
+    // Prints information about the chosen device. Most of these results should stay the same when
+    // switching between the CUDA and OpenCL back-ends.
+    printf("\n## Printing device information...\n");
+    printf(" > Platform ID                  %zu\n", platform_id);
+    printf(" > Device ID                    %zu\n", device_id);
+    printf(" > Framework version            %s\n", device.Version().c_str());
+    printf(" > Vendor                       %s\n", device.Vendor().c_str());
+    printf(" > Device name                  %s\n", device.Name().c_str());
+    printf(" > Device type                  %s\n", device.Type().c_str());
+    printf(" > Max work-group size          %zu\n", device.MaxWorkGroupSize());
+    printf(" > Max thread dimensions        %zu\n", device.MaxWorkItemDimensions());
+    printf(" > Max work-group sizes:\n");
+    for (auto i=size_t{0}; i<device.MaxWorkItemDimensions(); ++i) {
+        printf("   - in the %zu-dimension         %zu\n", i, device.MaxWorkItemSizes()[i]);
+    }
+    printf(" > Local memory per work-group  %zu bytes\n", device.LocalMemSize());
+    printf(" > Device capabilities          %s\n", device.Capabilities().c_str());
+    printf(" > Core clock rate              %zu MHz\n", device.CoreClock());
+    printf(" > Number of compute units      %zu\n", device.ComputeUnits());
+    printf(" > Total memory size            %zu bytes\n", device.MemorySize());
+    printf(" > Maximum allocatable memory   %zu bytes\n", device.MaxAllocSize());
+    printf(" > Memory clock rate            %zu MHz\n", device.MemoryClock());
+    printf(" > Memory bus width             %zu bits\n", device.MemoryBusWidth());
+
+#else
+    nn_warn("TinyDNN was not build with OpenCL or CUDA support.");
+#endif
+}
+>>>>>>> 69791e17733baab965870e26833d40e4c8f2a5ed
 
 } // namespace tiny_cnn
 
