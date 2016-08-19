@@ -52,6 +52,7 @@
 #include <future>
 #endif
 
+#ifdef USE_OPENCL
 #include "third_party/CLCudaAPI/clpp11.h"
 #else
 #include "third_party/CLCudaAPI/cupp11.h"
@@ -537,39 +538,6 @@ inline void fill_tensor(tensor_t& tensor, float_t value, cnn_size_t size) {
 }
 
 // get all platforms (drivers), e.g. NVIDIA
-<<<<<<< HEAD
-#ifdef USE_OPENCL
-void printAllAvailableDevice() {
-    std::vector<cl::Platform> all_platforms;
-    cl::Platform::get(&all_platforms);
-
-    if (all_platforms.size() == 0) {
-        std::cout << " No platforms found. Check OpenCL installation!\n";
-        exit(1);
-    }
-
-    for (size_t i = 0; i < all_platforms.size(); ++i) {
-        cl::Platform default_platform = all_platforms[i];
-        std::cout << "-- Using platform (" << i << "): "
-                  << default_platform.getInfo<CL_PLATFORM_NAME>() << "\n";
-
-        // get default device (CPUs, GPUs) of the default patform
-        std::vector<cl::Device> all_devices;
-        default_platform.getDevices(CL_DEVICE_TYPE_ALL, &all_devices);
-
-        if (all_devices.size() == 0) {
-            std::cout << " No devices found. Check OpenCL installation!\n";
-        }
-
-        for (size_t j = 0; j < all_devices.size(); ++j) {
-            cl::Device default_device = all_devices[j];
-            std::cout << "---- Using device (" << j << "): "
-                      << default_device.getInfo<CL_DEVICE_NAME>() << "\n";
-        }
-    }
-}
-#endif
-=======
 // https://github.com/CNugteren/CLCudaAPI/blob/master/samples/device_info.cc
 
 void printAvailableDevice(const int _platform_id, const int _device_id) {
@@ -612,7 +580,6 @@ void printAvailableDevice(const int _platform_id, const int _device_id) {
     nn_warn("TinyDNN was not build with OpenCL or CUDA support.");
 #endif
 }
->>>>>>> 69791e17733baab965870e26833d40e4c8f2a5ed
 
 } // namespace tiny_cnn
 
